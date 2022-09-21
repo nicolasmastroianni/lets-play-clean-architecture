@@ -30,7 +30,8 @@ export class GetDigimonInfoByNameRestAdapter implements GetDigimonInfoByNameRepo
       const url = this.config.get("URL_DIGIMON");
       this.logger.log(`url a consultar : ${url + name}`);
       const { data } = await this.httpService.axiosRef.get(url + name);
-      const digimonModel = new DigimonRestModel(name, data?.level);
+      const [elemWithData] = data;
+      const digimonModel = new DigimonRestModel(name, elemWithData?.level);
       this.logger.log(`Devolviendo digimon : ${JSON.stringify(digimonModel)}`)
       return digimonModel.toDomain()
     } catch (e) {
