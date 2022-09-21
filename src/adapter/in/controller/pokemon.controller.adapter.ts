@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Logger, Param } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, Inject, Logger, Param } from "@nestjs/common";
 import { GetPokemonByNameQuery } from "../../../application/port/in/get.pokemon.by.name.query";
 import { PokemonResponse } from "./model/pokemon.response";
 
@@ -9,6 +9,7 @@ export class PokemonControllerAdapter {
   constructor(@Inject("getPokemonByNameQuery") private readonly getPokemonByNameQuery: GetPokemonByNameQuery) {}
 
   @Get('/:name')
+  @HttpCode(HttpStatus.OK)
   async get(@Param('name') name : string): Promise<PokemonResponse> {
     this.logger.log(`Obteniendo pokemon con nombre : ${name}`)
     const pokemon = await this.getPokemonByNameQuery.execute(name);
