@@ -6,8 +6,8 @@ import { ErrorDescription } from "../../../config/error.description";
 import { getException, UNHANDLED_EXCEPTION } from "../../utils/exception.utils";
 import { NotAvailableException } from "../../exception/not.available.exception";
 import { HttpService } from "@nestjs/axios";
-import { ConfigService } from "@nestjs/config";
 import { DigimonRestModel } from "./model/digimon.rest.model";
+import { ConfigurationProperties } from "../../../config/configuration.properties";
 
 @Injectable()
 export class GetDigimonInfoByNameRestAdapter implements GetDigimonInfoByNameRepository {
@@ -21,19 +21,19 @@ export class GetDigimonInfoByNameRestAdapter implements GetDigimonInfoByNameRepo
   ]);
 
   constructor(private readonly httpService: HttpService,
-              private readonly config: ConfigService) {
+              private readonly config: ConfigurationProperties) {
   }
 
   async execute(name: string): Promise<Digimon> {
     try {
       this.logger.log(`Buscando digimon con nombre : ${name}`);
-      const url = this.config.get("URL_DIGIMON");
+      const url = this.config.digimonConfiguration.url;
       this.logger.log(`url a consultar : ${url + name}`);
       const { data } = await this.httpService.axiosRef.get(url + name);
       const [elemWithData] = data;
       const digimonModel = new DigimonRestModel(name, elemWithData?.level);
-      this.logger.log(`Devolviendo digimon : ${JSON.stringify(digimonModel)}`)
-      return digimonModel.toDomain()
+      this.logger.log(`Devolviendo digimon : ${JSON.stringify(digimonModel)}`);
+      return digimonModel.toDomain();
     } catch (e) {
       this.logger.error(`Hubo un error buscando la informacion del digimon
        y el error es : ${e}`);

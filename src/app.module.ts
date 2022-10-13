@@ -10,6 +10,7 @@ import { CreateDigimonUseCase } from "./application/usecase/create.digimon.use.c
 import { CreateDigimonCachemanagerAdapter } from "./adapter/out/cachemanager/create.digimon.cachemanager.adapter";
 import { GetDigimonInfoByNameRestAdapter } from "./adapter/out/rest/get.digimon.info.by.name.rest.adapter";
 import { DigimonControllerAdapter } from "./adapter/in/controller/digimon.controller.adapter";
+import { ConfigurationProperties } from "./config/configuration.properties";
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { DigimonControllerAdapter } from "./adapter/in/controller/digimon.contro
       timeout: 5000
     }), CacheModule.register()],
   controllers: [PokemonControllerAdapter, DigimonControllerAdapter],
-  providers: [
+  providers: [ConfigurationProperties,
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
