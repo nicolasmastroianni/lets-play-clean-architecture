@@ -1,8 +1,14 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class DigimonRequestBody {
-  constructor(private readonly _name : string) {
+  @ApiProperty({ name: "name", example: "leomon", description: "The name of digimon" })
+  private readonly _name: string;
+
+  constructor(name: string) {
+    this._name = name;
   }
 
-  get name() : string {
+  get name(): string {
     return this._name;
   }
 }

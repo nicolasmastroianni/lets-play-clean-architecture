@@ -2,7 +2,9 @@ import { Body, Controller, HttpCode, HttpStatus, Inject, Logger, Post } from "@n
 import { DigimonRequestBody } from "./model/digimon.request.body";
 import { CreateDigimonCommand } from "../../../application/port/in/create.digimon.command";
 import { CreateDigimonRequest } from "../../../application/model/create.digimon.request";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('digimons')
 @Controller('api/v1/digimons')
 export class DigimonControllerAdapter {
   private readonly logger = new Logger(DigimonControllerAdapter.name);
@@ -11,6 +13,11 @@ export class DigimonControllerAdapter {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create Digimon' })
+  @ApiResponse({ status: 201, description: 'Digimon Created' })
+  @ApiResponse({ status: 404, description: 'Digimon profile not found' })
+  @ApiResponse({ status: 500, description: 'Internal error' })
+  @ApiResponse({ status: 503, description: 'Service unavailable' })
   async create(@Body() body : DigimonRequestBody) : Promise<void> {
     this.logger.log(`Creando digimon con body : ${JSON.stringify(body)}`)
     await this.createDigimonCommand.execute(this.buildRequest(body))
