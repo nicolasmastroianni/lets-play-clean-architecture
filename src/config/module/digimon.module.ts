@@ -3,21 +3,18 @@ import { DigimonControllerAdapter } from "../../adapter/in/controller/digimon.co
 import { CreateDigimonCachemanagerAdapter } from "../../adapter/out/cachemanager/create.digimon.cachemanager.adapter";
 import { GetDigimonInfoByNameRestAdapter } from "../../adapter/out/rest/get.digimon.info.by.name.rest.adapter";
 import { CreateDigimonUseCase } from "../../application/usecase/create.digimon.use.case";
-import { ConfigurationProperties } from "../configuration.properties";
-import { ConfigModule } from "@nestjs/config";
+import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: "config/.env"
-    }), HttpModule.register({
+    CommonModule, HttpModule.register({
       timeout: 5000
-    }), CacheModule.register()
+    }),
+    CacheModule.register()
   ],
   controllers: [DigimonControllerAdapter],
-  providers: [ConfigurationProperties,
+  providers: [
     {
       useClass: CreateDigimonCachemanagerAdapter,
       provide: "createDigimonRepository"
