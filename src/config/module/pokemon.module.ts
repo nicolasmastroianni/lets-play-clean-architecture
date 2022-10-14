@@ -4,12 +4,17 @@ import { PokemonRestAdapter } from "../../adapter/out/rest/pokemon.rest.adapter"
 import { GetPokemonByNameUseCase } from "../../application/usecase/get.pokemon.by.name.use.case";
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
+import { ConfigurationProperties } from "../configuration.properties";
 
 @Module({
   imports: [
     CommonModule,
-    HttpModule.register({
-      timeout: 5000
+    HttpModule.registerAsync({
+      imports:[CommonModule],
+      useFactory: (config: ConfigurationProperties) => ({
+        timeout: config.restClientConfiguration.timeout,
+      }),
+      inject: [ConfigurationProperties],
     })
   ],
   controllers: [PokemonControllerAdapter],

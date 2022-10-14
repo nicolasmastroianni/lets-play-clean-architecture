@@ -5,11 +5,18 @@ import { GetDigimonInfoByNameRestAdapter } from "../../adapter/out/rest/get.digi
 import { CreateDigimonUseCase } from "../../application/usecase/create.digimon.use.case";
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
+import { ConfigService } from "@nestjs/config";
+import { ConfigurationProperties } from "../configuration.properties";
 
 @Module({
   imports: [
-    CommonModule, HttpModule.register({
-      timeout: 5000
+    CommonModule,
+    HttpModule.registerAsync({
+      imports:[CommonModule],
+      useFactory: (config: ConfigurationProperties) => ({
+        timeout: config.restClientConfiguration.timeout,
+      }),
+      inject: [ConfigurationProperties],
     }),
     CacheModule.register()
   ],

@@ -6,11 +6,13 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { DEFAULT_ENVIRONMENT, ENVIRONMENT, ENVIRONMENTS } from "./constants.environment";
 import { DigimonConfiguration } from "./model/digimon.configuration";
+import { RestClientConfiguration } from "./model/rest.client.configuration";
 
 @Injectable()
 export class ConfigurationProperties {
   private readonly _pokemonConfiguration: PokemonConfiguration;
   private readonly _digimonConfiguration: DigimonConfiguration;
+  private readonly _restClientConfiguration: RestClientConfiguration;
 
   constructor(private readonly configService: ConfigService) {
     const environment = configService.get<string>(ENVIRONMENT);
@@ -20,6 +22,7 @@ export class ConfigurationProperties {
     ) as Record<string, any>;
     this._pokemonConfiguration = new PokemonConfiguration(config.service.uri.pokemon);
     this._digimonConfiguration = new DigimonConfiguration(config.service.uri.digimon);
+    this._restClientConfiguration = new RestClientConfiguration(config.rest.client.default.timeout)
   }
 
   get pokemonConfiguration() : PokemonConfiguration{
@@ -28,5 +31,9 @@ export class ConfigurationProperties {
 
   get digimonConfiguration() : DigimonConfiguration{
     return this._digimonConfiguration
+  }
+
+  get restClientConfiguration() : RestClientConfiguration{
+    return this._restClientConfiguration
   }
 }
