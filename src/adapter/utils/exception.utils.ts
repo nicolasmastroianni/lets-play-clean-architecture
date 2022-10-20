@@ -12,3 +12,11 @@ const findFirst = (list: string[]): string => {
 }
 
 export const UNHANDLED_EXCEPTION = 'UnhandledException';
+export const UNHANDLED_REST_EXCEPTION = -1;
+
+export const getStatus = (e:any) : number => {
+  const error = JSON.stringify(e);
+  const errorParsed = JSON.parse(error);
+  const {status} = errorParsed;
+  return status;
+}

@@ -4,7 +4,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { HttpService } from "@nestjs/axios";
 import { PokemonRestModel } from "./model/pokemon.rest.model";
 import { NotAvailableException } from "../../exception/not.available.exception";
-import { getException, UNHANDLED_EXCEPTION } from "../../utils/exception.utils";
+import {  getStatus, UNHANDLED_REST_EXCEPTION } from "../../utils/exception.utils";
 import { ErrorDescription } from "../../../config/error.description";
 import { NotFoundException } from "../../exception/not.found.exception";
 import { ConfigurationProperties } from "../../../config/configuration.properties";
@@ -15,9 +15,9 @@ export class PokemonRestAdapter implements PokemonRepository {
   private readonly logger = new Logger(PokemonRestAdapter.name);
 
   private readonly exceptions = new Map([
-    ["AxiosError",
+    [404,
       new NotFoundException(ErrorDescription.NOT_FOUND)],
-    [UNHANDLED_EXCEPTION,
+    [UNHANDLED_REST_EXCEPTION,
       new NotAvailableException(ErrorDescription.UNHANDLED)]
   ]);
 
@@ -38,10 +38,11 @@ export class PokemonRestAdapter implements PokemonRepository {
       return pokemonModel.toDomain();
     } catch (e) {
       this.logger.error(`Hubo un error buscando pokemon y el error es : ${e}`);
+      const status = getStatus(e)
       throw this.exceptions.get(
-        this.exceptions.has(getException(e))
-          ? getException(e)
-          : UNHANDLED_EXCEPTION
+        this.exceptions.has(status)
+          ? status
+          : UNHANDLED_REST_EXCEPTION
       );
     }
   }

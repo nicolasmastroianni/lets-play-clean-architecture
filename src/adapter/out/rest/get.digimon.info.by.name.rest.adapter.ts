@@ -3,7 +3,7 @@ import { Digimon } from "../../../application/model/digimon";
 import { Injectable, Logger } from "@nestjs/common";
 import { NotFoundException } from "../../exception/not.found.exception";
 import { ErrorDescription } from "../../../config/error.description";
-import { getException, UNHANDLED_EXCEPTION } from "../../utils/exception.utils";
+import { getException, getStatus, UNHANDLED_EXCEPTION, UNHANDLED_REST_EXCEPTION } from "../../utils/exception.utils";
 import { NotAvailableException } from "../../exception/not.available.exception";
 import { HttpService } from "@nestjs/axios";
 import { DigimonRestModel } from "./model/digimon.rest.model";
@@ -14,9 +14,11 @@ export class GetDigimonInfoByNameRestAdapter implements GetDigimonInfoByNameRepo
   private readonly logger = new Logger(GetDigimonInfoByNameRestAdapter.name);
 
   private readonly exceptions = new Map([
-    ["AxiosError",
+    [400,
       new NotFoundException(ErrorDescription.NOT_FOUND)],
-    [UNHANDLED_EXCEPTION,
+    [404,
+      new NotFoundException(ErrorDescription.NOT_FOUND)],
+    [UNHANDLED_REST_EXCEPTION,
       new NotAvailableException(ErrorDescription.UNHANDLED)]
   ]);
 
@@ -37,10 +39,12 @@ export class GetDigimonInfoByNameRestAdapter implements GetDigimonInfoByNameRepo
     } catch (e) {
       this.logger.error(`Hubo un error buscando la informacion del digimon
        y el error es : ${e}`);
+      const status = getStatus(e)
+      console.log({status})
       throw this.exceptions.get(
-        this.exceptions.has(getException(e))
-          ? getException(e)
-          : UNHANDLED_EXCEPTION
+        this.exceptions.has(status)
+          ? status
+          : UNHANDLED_REST_EXCEPTION
       );
     }
   }
