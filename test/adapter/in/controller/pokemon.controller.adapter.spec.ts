@@ -27,67 +27,26 @@ describe("PokemonControllerAdapter", () => {
     expect(response instanceof PokemonResponse).toBeTruthy();
   });
 
-  it("GIVEN a name " +
-    "WHEN a GET is performed to /pokemons/{name} then GetPokemonByNameQuery throws NotFoundException " +
-    "THEN the exception response is NotFoundException", async () => {
-    const exceptionMock = new NotFoundException(ErrorDescription.NOT_FOUND);
-    getPokemonByNameQuery = new Mock<GetPokemonByNameQuery>()
-      .setup((instance) => instance.execute("sarasa"))
-      .throws(exceptionMock)
-      .object();
-    pokemonController = new PokemonControllerAdapter(getPokemonByNameQuery);
-    try {
-      await pokemonController.get("sarasa");
-    } catch (e) {
-      expect(e).toBe(exceptionMock);
-    }
-  });
-
-  it("GIVEN a name " +
-    "WHEN a GET is performed to /pokemons/{name} then GetPokemonByNameQuery throws BusinessException " +
-    "THEN the exception response is BusinessException", async () => {
-    const exceptionMock = new BusinessException(ErrorDescription.INCONSISTENCY_DIGIMON);
-    getPokemonByNameQuery = new Mock<GetPokemonByNameQuery>()
-      .setup((instance) => instance.execute("agumon"))
-      .throws(exceptionMock)
-      .object();
-    pokemonController = new PokemonControllerAdapter(getPokemonByNameQuery);
-    try {
-      await pokemonController.get("agumon");
-    } catch (e) {
-      expect(e).toBe(exceptionMock);
-    }
-  });
-
-  it("GIVEN a name " +
-    "WHEN a GET is performed to /pokemons/{name} then GetPokemonByNameQuery throws Error " +
-    "THEN the exception response is Error", async () => {
-    const exceptionMock = new Error("");
-    getPokemonByNameQuery = new Mock<GetPokemonByNameQuery>()
-      .setup((instance) => instance.execute("sarasa"))
-      .throws(exceptionMock)
-      .object();
-    pokemonController = new PokemonControllerAdapter(getPokemonByNameQuery);
-    try {
-      await pokemonController.get("sarasa");
-    } catch (e) {
-      expect(e).toBe(exceptionMock);
-    }
-  });
-
-  it("GIVEN a name " +
-    "WHEN a GET is performed to /pokemons/{name} then GetPokemonByNameQuery throws NotAvailableException " +
-    "THEN the exception response is NotAvailableException", async () => {
-    const exceptionMock = new NotAvailableException(ErrorDescription.UNHANDLED);
-    getPokemonByNameQuery = new Mock<GetPokemonByNameQuery>()
-      .setup((instance) => instance.execute("sarasa"))
-      .throws(exceptionMock)
-      .object();
-    pokemonController = new PokemonControllerAdapter(getPokemonByNameQuery);
-    try {
-      await pokemonController.get("sarasa");
-    } catch (e) {
-      expect(e).toBe(exceptionMock);
-    }
+  describe("exceptions bubbling", () => {
+    test.each`
+    exception                                                         | expected
+    ${new NotFoundException(ErrorDescription.NOT_FOUND)}              | ${new NotFoundException(ErrorDescription.NOT_FOUND)}
+    ${new BusinessException(ErrorDescription.INCONSISTENCY_DIGIMON)}  | ${new BusinessException(ErrorDescription.INCONSISTENCY_DIGIMON)}
+    ${new NotAvailableException(ErrorDescription.UNHANDLED)}          | ${new NotAvailableException(ErrorDescription.UNHANDLED)}
+    ${new Error("")}                                                  | ${new Error("")} 
+    `("GIVEN a name " +
+      "WHEN a GET is performed to /pokemons/{name} and the GetPokemonByNameQuery throws {exception} " +
+      "THEN {expected} is thrown", async ({ exception, expected }) => {
+      getPokemonByNameQuery = new Mock<GetPokemonByNameQuery>()
+        .setup((instance) => instance.execute("sarasa"))
+        .throws(exception)
+        .object();
+      pokemonController = new PokemonControllerAdapter(getPokemonByNameQuery);
+      try {
+        await pokemonController.get("sarasa");
+      } catch (e) {
+        expect(e).toStrictEqual(expected);
+      }
+    });
   });
 });
