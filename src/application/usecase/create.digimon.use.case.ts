@@ -16,7 +16,7 @@ export class CreateDigimonUseCase implements CreateDigimonCommand {
 
   async execute(command: CreateDigimonRequest): Promise<void> {
     this.logger.log(`Iniciando caso de uso para creacion de digimon : ${JSON.stringify(command)}`);
-    const digimonToCreate: Digimon = await this.getDigimonInfoByNameRepository.execute(command.name);
+    const digimonToCreate: Digimon = await this.getDigimonInfoByNameRepository.execute(command.getName());
     await this.createDigimonRepository.execute(digimonToCreate);
     this.logger.log(`Digimon creado exitosamente`);
   }

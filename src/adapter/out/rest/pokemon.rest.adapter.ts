@@ -28,7 +28,7 @@ export class PokemonRestAdapter implements PokemonRepository {
   async get(name: string): Promise<Pokemon> {
     try {
       this.logger.log(`Buscando pokemon con nombre : ${name}`);
-      const url = this.config.pokemonConfiguration.url;
+      const url = this.config.getPokemonConfiguration().getUrl();
       this.logger.log(`url a consultar : ${url + name}`);
       const { data } = await this.httpService.axiosRef.get(url + name);
       const pokemonModel = new PokemonRestModel(name,

@@ -14,7 +14,7 @@ import { ConfigurationProperties } from "../configuration.properties";
     HttpModule.registerAsync({
       imports:[CommonModule],
       useFactory: (config: ConfigurationProperties) => ({
-        timeout: config.restClientConfiguration.timeout,
+        timeout: config.getRestClientConfiguration().getTimeout(),
       }),
       inject: [ConfigurationProperties],
     }),

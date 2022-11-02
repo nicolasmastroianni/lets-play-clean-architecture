@@ -23,7 +23,7 @@ export class CreateDigimonCachemanagerAdapter implements CreateDigimonRepository
   async execute(digimon: Digimon): Promise<void> {
     try {
       this.logger.log(`Creando digimon : ${JSON.stringify(digimon)}`);
-      await this.cacheManager.set(this.KEY + digimon.name, digimon, { ttl: 39600 });
+      await this.cacheManager.set(this.KEY + digimon.getName(), digimon, { ttl: 39600 });
       this.logger.log(`Digimon creado`);
     } catch (e) {
       this.logger.error(`Hubo un error creando el digimon y el error es : ${e}`);

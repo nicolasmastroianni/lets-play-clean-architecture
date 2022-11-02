@@ -10,9 +10,9 @@ import { RestClientConfiguration } from "./model/rest.client.configuration";
 
 @Injectable()
 export class ConfigurationProperties {
-  private readonly _pokemonConfiguration: PokemonConfiguration;
-  private readonly _digimonConfiguration: DigimonConfiguration;
-  private readonly _restClientConfiguration: RestClientConfiguration;
+  private readonly pokemonConfiguration: PokemonConfiguration;
+  private readonly digimonConfiguration: DigimonConfiguration;
+  private readonly restClientConfiguration: RestClientConfiguration;
 
   constructor(private readonly configService: ConfigService) {
     const environment = configService.get<string>(ENVIRONMENT);
@@ -20,20 +20,20 @@ export class ConfigurationProperties {
     const config = yaml.load(
       readFileSync(join(__dirname, "../../config/", `${prefixConfigFile}-config.yaml`), "utf8")
     ) as Record<string, any>;
-    this._pokemonConfiguration = new PokemonConfiguration(config.service.uri.pokemon);
-    this._digimonConfiguration = new DigimonConfiguration(config.service.uri.digimon);
-    this._restClientConfiguration = new RestClientConfiguration(config.rest.client.default.timeout)
+    this.pokemonConfiguration = new PokemonConfiguration(config.service.uri.pokemon);
+    this.digimonConfiguration = new DigimonConfiguration(config.service.uri.digimon);
+    this.restClientConfiguration = new RestClientConfiguration(config.rest.client.default.timeout)
   }
 
-  get pokemonConfiguration() : PokemonConfiguration{
-    return this._pokemonConfiguration
+  getPokemonConfiguration() : PokemonConfiguration{
+    return this.pokemonConfiguration
   }
 
-  get digimonConfiguration() : DigimonConfiguration{
-    return this._digimonConfiguration
+  getDigimonConfiguration() : DigimonConfiguration{
+    return this.digimonConfiguration
   }
 
-  get restClientConfiguration() : RestClientConfiguration{
-    return this._restClientConfiguration
+  getRestClientConfiguration() : RestClientConfiguration{
+    return this.restClientConfiguration
   }
 }

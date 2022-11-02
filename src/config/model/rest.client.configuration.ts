@@ -1,7 +1,7 @@
 export class RestClientConfiguration {
-  constructor(private readonly _timeout : number) {
+  constructor(private readonly timeout : number) {
   }
-  get timeout() : number{
-    return this._timeout
+  getTimeout() : number{
+    return this.timeout
   }
 }

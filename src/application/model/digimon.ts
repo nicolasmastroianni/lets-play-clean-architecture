@@ -1,14 +1,14 @@
 export class Digimon{
   constructor(
-    private readonly _name : string,
-    private readonly _level : number
+    private readonly name : string,
+    private readonly level : number
   ){}
 
-  get name() : string {
-    return this._name;
+  getName() : string {
+    return this.name;
   }
 
-  get level() : number {
-    return this._level
+  getLevel() : number {
+    return this.level
   }
 }

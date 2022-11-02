@@ -1,8 +1,8 @@
 export class CreateDigimonRequest {
-  constructor(private readonly _name : string) {
+  constructor(private readonly name : string) {
   }
 
-  get name() : string {
-    return this._name;
+  getName() : string {
+    return this.name;
   }
 }

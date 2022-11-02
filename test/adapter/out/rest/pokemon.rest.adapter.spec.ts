@@ -26,7 +26,7 @@ describe("PokemonRestAdapter", () => {
     "THEN should return that Pokemon", async () => {
     const expected = new Pokemon(NAME, EXPECTED_TYPES, EXPECTED_ABILITIES);
     configurationProperties = new Mock<ConfigurationProperties>()
-      .setup((instance) => instance.pokemonConfiguration.url)
+      .setup((instance) => instance.getPokemonConfiguration().getUrl())
       .returns(URL)
       .object();
     httpService = new Mock<HttpService>()
@@ -54,7 +54,7 @@ describe("PokemonRestAdapter", () => {
     "THEN should throw NotFoundException", async () => {
     const expected = new NotFoundException(ErrorDescription.NOT_FOUND);
     configurationProperties = new Mock<ConfigurationProperties>()
-      .setup((instance) => instance.pokemonConfiguration.url)
+      .setup((instance) => instance.getPokemonConfiguration().getUrl())
       .returns(URL)
       .object();
     httpService = new Mock<HttpService>()
@@ -74,7 +74,7 @@ describe("PokemonRestAdapter", () => {
     "THEN should throw NotAvailableException", async () => {
     const expected = new NotAvailableException(ErrorDescription.UNHANDLED);
     configurationProperties = new Mock<ConfigurationProperties>()
-      .setup((instance) => instance.pokemonConfiguration.url)
+      .setup((instance) => instance.getPokemonConfiguration().getUrl())
       .returns(URL)
       .object();
     httpService = new Mock<HttpService>()

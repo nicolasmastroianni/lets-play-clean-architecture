@@ -1,7 +1,7 @@
 export class PokemonConfiguration {
-  constructor(private readonly _url : string) {
-  }
-  get url() : string{
-    return this._url
+  constructor(private readonly url: string) {}
+  
+  getUrl(): string {
+    return this.url;
   }
 }

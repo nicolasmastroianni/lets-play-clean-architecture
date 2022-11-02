@@ -22,6 +22,10 @@
     "docker:build": "docker build -t lets-play-clean-architecture .",
     "postdocker:build": "docker run -it lets-play-clean-architecture yarn test"
   },
+  "volta": {
+    "node": "16.14.0",
+    "npm": "8.5.0"
+  },
   "dependencies": {
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
@@ -29,8 +33,10 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.2",
+    "@types/lodash": "^4.14.187",
     "cache-manager": "^4.1.0",
     "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
     "moq.ts": "^9.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

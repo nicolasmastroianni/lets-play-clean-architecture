@@ -2,19 +2,19 @@ import { Digimon } from "../../../../application/model/digimon";
 import { digimonLevels } from "./digimon.levels";
 
 export class DigimonRestModel{
-  constructor(private readonly _name : string,
-              private readonly _level : string) {}
+  constructor(private readonly name : string,
+              private readonly level : string) {}
 
-  get name(): string {
-    return this._name
+  getName(): string {
+    return this.name
   }
 
-  get level() : string {
-    return this._level
+  getLevel() : string {
+    return this.level
   }
 
   toDomain() : Digimon {
-    return new Digimon(this._name,
+    return new Digimon(this.name,
       digimonLevels.has(this.level) ? digimonLevels.get(this.level) : -1)
 }
 }

@@ -1,7 +1,7 @@
 export class DigimonConfiguration {
-  constructor(private readonly _url : string) {
+  constructor(private readonly url : string) {
   }
-  get url() : string{
-    return this._url
+  getUrl() : string{
+    return this.url
   }
 }

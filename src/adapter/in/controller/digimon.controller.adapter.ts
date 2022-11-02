@@ -1,8 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Inject, Logger, Post } from "@nestjs/common";
 import { DigimonRequestBody } from "./model/digimon.request.body";
 import { CreateDigimonCommand } from "../../../application/port/in/create.digimon.command";
-import { CreateDigimonRequest } from "../../../application/model/create.digimon.request";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { CreateDigimonRequest } from "src/application/model/create.digimon.request";
 
 @ApiTags('digimons')
 @Controller('api/v1/digimons')

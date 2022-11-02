@@ -1,11 +1,7 @@
 export abstract class GenericException {
-  private readonly _description;
+  protected constructor(private readonly description) { }
 
-  protected constructor(description : string) {
-    this._description = description
-  }
-
-  get description() : string {
-    return this._description
+  getDescription() : string {
+    return this.description
   }
 }

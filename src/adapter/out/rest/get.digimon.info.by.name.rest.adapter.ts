@@ -29,7 +29,7 @@ export class GetDigimonInfoByNameRestAdapter implements GetDigimonInfoByNameRepo
   async execute(name: string): Promise<Digimon> {
     try {
       this.logger.log(`Buscando digimon con nombre : ${name}`);
-      const url = this.config.digimonConfiguration.url;
+      const url = this.config.getDigimonConfiguration().getUrl();
       this.logger.log(`url a consultar : ${url + name}`);
       const { data } = await this.httpService.axiosRef.get(url + name);
       const [elemWithData] = data;

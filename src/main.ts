@@ -2,11 +2,13 @@ import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { AllExceptionsFilter } from "./config/all.exceptions.filter";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { SnakeCamelCaseInterceptor } from "./middlewares/snakeCamelCase.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  app.useGlobalInterceptors(new SnakeCamelCaseInterceptor())
   const options = new DocumentBuilder()
     .setTitle("lets-play-clean-architecture example")
     .setDescription("infance's cartoons")

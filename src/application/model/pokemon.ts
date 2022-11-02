@@ -1,21 +1,21 @@
 export class Pokemon {
 
   constructor(
-    private readonly _name: string,
-    private readonly _types: string[],
-    private readonly _abilities: string[],
+    private readonly name: string,
+    private readonly types: string[],
+    private readonly abilities: string[],
   ) {}
 
-  get name(): string {
-    return this._name;
+  getName(): string {
+    return this.name;
   }
 
-  get types(): string[] {
-    return this._types;
+  getTypes(): string[] {
+    return this.types;
   }
 
-  get abilities(): string[] {
-    return this._abilities;
+  getAbilities(): string[] {
+    return this.abilities;
   }
 
 }
