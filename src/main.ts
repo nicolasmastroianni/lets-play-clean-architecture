@@ -2,7 +2,7 @@ import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { AllExceptionsFilter } from "./config/all.exceptions.filter";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { SnakeCamelCaseInterceptor } from "./middlewares/snakeCamelCase.interceptor";
+import { SnakeCamelCaseInterceptor } from "./config/middleware/snake.camel.case.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
