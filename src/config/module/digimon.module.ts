@@ -5,11 +5,12 @@ import { GetDigimonInfoByNameRestAdapter } from "../../adapter/out/rest/get.digi
 import { CreateDigimonUseCase } from "../../application/usecase/create.digimon.use.case";
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
-import { ConfigService } from "@nestjs/config";
 import { ConfigurationProperties } from "../configuration.properties";
+import { KafkaModule } from "src/kafka/kafka.module";
 
 @Module({
   imports: [
+    KafkaModule,
     CommonModule,
     HttpModule.registerAsync({
       imports:[CommonModule],

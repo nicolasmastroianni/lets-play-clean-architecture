@@ -5,9 +5,11 @@ import { GetPokemonByNameUseCase } from "../../application/usecase/get.pokemon.b
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigurationProperties } from "../configuration.properties";
+import { KafkaModule } from "src/kafka/kafka.module";
 
 @Module({
   imports: [
+    KafkaModule,
     CommonModule,
     HttpModule.registerAsync({
       imports:[CommonModule],
