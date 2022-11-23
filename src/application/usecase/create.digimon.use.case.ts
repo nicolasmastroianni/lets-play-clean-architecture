@@ -4,7 +4,7 @@ import { CreateDigimonRequest } from "../model/create.digimon.request";
 import { Digimon } from "../model/digimon";
 import { GetDigimonInfoByNameRepository } from "../port/out/get.digimon.info.by.name.repository";
 import { CreateDigimonRepository } from "../port/out/create.digimon.repository";
-import { ProducerService } from "src/kafka/producer.service";
+import { ProducerService } from "src/config/kafka/producer.service";
 
 @Injectable()
 export class CreateDigimonUseCase implements CreateDigimonCommand {
@@ -19,15 +19,12 @@ export class CreateDigimonUseCase implements CreateDigimonCommand {
     this.logger.log(`Iniciando caso de uso para creacion de digimon : ${JSON.stringify(command)}`);
     const digimonToCreate: Digimon = await this.getDigimonInfoByNameRepository.execute(command.name);
     await this.createDigimonRepository.execute(digimonToCreate);
-    this.logger.log(`Comenzando creacion por kafka`);
+    this.logger.log(`Creacion de mensaje en kafka`);
     await this.produceServices.produce({
-      topic: 'Digimon',
-      messages: [{
-        key: 'asd',
-        value: digimonToCreate.name + digimonToCreate.level
-      }]
+      topic: 'digimon',
+      messages: [{ value: `name: ${digimonToCreate.name}, level: ${digimonToCreate.level.toString()}` }]
     })
-    this.logger.log(`Finalizacion creacion por kafka`);
+    this.logger.log(`Finalizacion de mensaje en kafka`);
     this.logger.log(`Digimon creado exitosamente`);
   }
 }

@@ -5,7 +5,7 @@ import { GetPokemonByNameUseCase } from "../../application/usecase/get.pokemon.b
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigurationProperties } from "../configuration.properties";
-import { KafkaModule } from "src/kafka/kafka.module";
+import { KafkaModule } from "src/config/kafka/kafka.module";
 
 @Module({
   imports: [

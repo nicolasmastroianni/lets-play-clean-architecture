@@ -6,7 +6,8 @@ import { CreateDigimonUseCase } from "../../application/usecase/create.digimon.u
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigurationProperties } from "../configuration.properties";
-import { KafkaModule } from "src/kafka/kafka.module";
+import { KafkaModule } from "src/config/kafka/kafka.module";
+import { DigimonConsumer } from "src/application/port/out/digimon.consumer";
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { KafkaModule } from "src/kafka/kafka.module";
     {
       useClass: CreateDigimonUseCase,
       provide: "createDigimonCommand"
-    }]
+    },
+    DigimonConsumer]
 })
 export class DigimonModule {
 }
