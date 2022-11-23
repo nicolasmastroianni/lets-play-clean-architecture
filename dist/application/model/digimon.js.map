@@ -1,1 +1,0 @@
-{"version":3,"file":"digimon.js","sourceRoot":"","sources":["../../../src/application/model/digimon.ts"],"names":[],"mappings":";;;AAAA,MAAa,OAAO;IAClB,YACmB,KAAc,EACd,MAAe;QADf,UAAK,GAAL,KAAK,CAAS;QACd,WAAM,GAAN,MAAM,CAAS;IAChC,CAAC;IAEH,IAAI,IAAI;QACN,OAAO,IAAI,CAAC,KAAK,CAAC;IACpB,CAAC;IAED,IAAI,KAAK;QACP,OAAO,IAAI,CAAC,MAAM,CAAA;IACpB,CAAC;CACF;AAbD,0BAaC"}
