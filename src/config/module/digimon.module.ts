@@ -6,8 +6,10 @@ import { CreateDigimonUseCase } from "../../application/usecase/create.digimon.u
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigurationProperties } from "../configuration.properties";
-import { KafkaModule } from "src/config/kafka/kafka.module";
-import { DigimonConsumer } from "src/application/port/out/digimon.consumer";
+import { KafkaModule } from "../kafka/kafka.module";
+import { DigimonKafkaConsumerAdapter } from "src/adapter/in/digimon.kafka.consumer.adapter";
+import { DigimonKafkaProducerAdapter } from "src/adapter/out/kafka/digimon.kafka.producer.adapter";
+
 
 @Module({
   imports: [
@@ -36,7 +38,11 @@ import { DigimonConsumer } from "src/application/port/out/digimon.consumer";
       useClass: CreateDigimonUseCase,
       provide: "createDigimonCommand"
     },
-    DigimonConsumer]
+    {
+      useClass: DigimonKafkaProducerAdapter,
+      provide: "eventRepository"
+    },
+    DigimonKafkaConsumerAdapter]
 })
 export class DigimonModule {
 }

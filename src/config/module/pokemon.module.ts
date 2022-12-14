@@ -5,7 +5,9 @@ import { GetPokemonByNameUseCase } from "../../application/usecase/get.pokemon.b
 import { CommonModule } from "./common.module";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigurationProperties } from "../configuration.properties";
-import { KafkaModule } from "src/config/kafka/kafka.module";
+import { KafkaModule } from "../kafka/kafka.module";
+import { PokemonKafkaProducerAdapter } from "src/adapter/out/kafka/pokemon.kafka.producer.adapter";
+
 
 @Module({
   imports: [
@@ -28,6 +30,10 @@ import { KafkaModule } from "src/config/kafka/kafka.module";
     {
       useClass: GetPokemonByNameUseCase,
       provide: "getPokemonByNameQuery"
+    },
+    {
+      useClass: PokemonKafkaProducerAdapter,
+      provide: "eventRepository"
     }]
 })
 export class PokemonModule {

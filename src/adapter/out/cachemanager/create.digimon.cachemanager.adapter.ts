@@ -31,7 +31,7 @@ export class CreateDigimonCachemanagerAdapter implements CreateDigimonRepository
         this.exceptions.has(getException(e))
           ? getException(e)
           : UNHANDLED_EXCEPTION
-      );
+      )
     }
   }
 }
